@@ -1,7 +1,81 @@
-﻿@{
-    ViewData["Title"] = "About";
+﻿@model AuctionService.AuctionItem;
+@{
+    ViewData["Title"] = "Bid";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<h2>Bid</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BidCustomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidCustomPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidTimestamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RatingPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.BidCustomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.BidCustomPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.BidPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.BidTimestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ItemNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.RatingPrice)
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-<p>Use this area to provide additional information.</p>
+@using(Html.BeginForm("Bid", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <p>        
+        Item number: <input type="text" name="itemNumber" value="@Model.ItemNumber">
+        Name: <input type="text" name="bidCustomName">
+        Phonenumber: <input type="text" name="bidCustomPhone">
+        Bid amout: <input type="text" name="bidPrice">
+        <input type="submit" value="Submit" onclick="return validateForm()" class="btn btn-primary">        
+    </p>
+}
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+    function validateForm() {
+        //do validation
+        if (bidCustomName.Length < 4 || bidCustomPhone.Length < 8) {
+            return false; //do not let submission go through
+        }
+        else {
+            return true; //let page be submitted
+        }
+    }
+</script>

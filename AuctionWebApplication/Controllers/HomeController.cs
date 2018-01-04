@@ -11,17 +11,26 @@ namespace AuctionWebApplication.Controllers {
             List<AuctionService.AuctionItem> Auctions = await service.GetAllAuctionItemsAsync();
             return View(Auctions);
         }
+        [HttpPost]
+        public async Task<IActionResult> Bid(string itemNumber, string bidCustomName, string bidCustomPhone, string bidPrice) {
+            var service = new AuctionService.AuctionsServiceClient();
+            await service.ProvideBidAsync(int.Parse(itemNumber), int.Parse(bidPrice), bidCustomName, bidCustomPhone);
 
-        public IActionResult About() {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            var chosenItem = await service.GetAuctionItemAsync(int.Parse(itemNumber));
+            return View("About", chosenItem);
         }
 
-        public IActionResult Contact() {
-            ViewData["Message"] = "Your contact page.";
+        public IActionResult About() {
+            return Redirect("Index");
+        }
 
-            return View();
+        [HttpPost]
+        public async Task<IActionResult> About(string itemNumber) {
+            var service = new AuctionService.AuctionsServiceClient();
+
+            var chosenItem = await service.GetAuctionItemAsync(int.Parse(itemNumber));
+
+            return View(chosenItem);
         }
 
         public IActionResult Error() {
