@@ -14,6 +14,7 @@ namespace AuctionWebApplication.Controllers {
         [HttpPost]
         public async Task<IActionResult> Bid(string itemNumber, string bidCustomName, string bidCustomPhone, string bidPrice) {
             var service = new AuctionService.AuctionsServiceClient();
+
             await service.ProvideBidAsync(int.Parse(itemNumber), int.Parse(bidPrice), bidCustomName, bidCustomPhone);
 
             var chosenItem = await service.GetAuctionItemAsync(int.Parse(itemNumber));
@@ -31,6 +32,18 @@ namespace AuctionWebApplication.Controllers {
             var chosenItem = await service.GetAuctionItemAsync(int.Parse(itemNumber));
 
             return View(chosenItem);
+        }
+
+        public async Task<ActionResult> History() {
+            var service = new AuctionService.AuctionsServiceClient();
+            List<AuctionService.AuctionItem> Auctions = await service.GetAllAuctionItemsAsync();
+            return View(Auctions);
+        }
+
+        public async Task<ActionResult> Create(string itemNumber, string idemDescription, string ratingPrice) {
+            var service = new AuctionService.AuctionsServiceClient();
+            await service.CreateAuctionItemAsync(int.Parse(itemNumber), idemDescription, int.Parse(ratingPrice));
+            return Redirect("Index");
         }
 
         public IActionResult Error() {

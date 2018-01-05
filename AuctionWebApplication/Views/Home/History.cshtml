@@ -1,26 +1,14 @@
 ﻿@model IEnumerable<AuctionService.AuctionItem>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "History";
 }
 
-<h2>Index</h2>
+<h2>History</h2>
 
-@using(Html.BeginForm("About","Home")) {
-    <p>
-        Item number: <input type="text" name="itemNumber">
-        <button type="submit">Go to bid site</button>
-    </p>
-}
-@using(Html.BeginForm("Create", "Home")) {
-    <p>
-        Item number: <input type="text" name="itemNumber">
-        Item description: <input type="text" name="idemDescription">
-        Rating price: <input type="text" name="ratingPrice">
-        <button type="submit">Go to bid site</button>
-    </p>
-}
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -71,6 +59,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RatingPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

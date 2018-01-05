@@ -57,25 +57,12 @@
     </tbody>
 </table>
 
-@using(Html.BeginForm("Bid", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
-    <p>        
+@using(Html.BeginForm("Bid", "Home", new { enctype = "multipart/form-data", onsubmit = "return validateTagInput()" })) {
+    <p>
         Item number: <input type="text" name="itemNumber" value="@Model.ItemNumber">
-        Name: <input type="text" name="bidCustomName">
-        Phonenumber: <input type="text" name="bidCustomPhone">
+        Name: <input pattern="[A-Za-z]{4,}" required title="Your name needs to be atleast 4 characters long" type="text" name="bidCustomName">
+        Phonenumber: <input pattern="[0-9]{8}" required title="Your phone number needs to be 8 characters" type="text" name="bidCustomPhone">
         Bid amout: <input type="text" name="bidPrice">
-        <input type="submit" value="Submit" onclick="return validateForm()" class="btn btn-primary">        
+        <input type="submit" id="btn" value="Bid">
     </p>
 }
-
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script>
-    function validateForm() {
-        //do validation
-        if (bidCustomName.Length < 4 || bidCustomPhone.Length < 8) {
-            return false; //do not let submission go through
-        }
-        else {
-            return true; //let page be submitted
-        }
-    }
-</script>
